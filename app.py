@@ -46,8 +46,10 @@ def forecast(model, steps):
 def get_current_value(ticker):
     logger.info(f"Fetching current value for ticker: {ticker}", extra={"logField": "current-value"})
     try:
-        stock = yf.Ticker(f"{ticker}.KA")
-        current_price = stock.history(period="1d")["Close"].iloc[-1]
+        #stock = yf.Ticker(f"{ticker}.KA")
+        #current_price = stock.history(period="1d")["Close"].iloc[-1]
+        df = fetch_stock_data(f"{ticker}.KA")
+        current_price = df.iloc[-1]
         return jsonify({"currentPrice": current_price})
     except Exception as e:
         logger.error(f"Error fetching current value for {ticker}: {str(e)}")
